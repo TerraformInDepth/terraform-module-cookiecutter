@@ -1,0 +1,20 @@
+name: Trivy
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tflint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout source code
+
+      - name: Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "config"
+          hide-progress: true
+          exit-code: "1"

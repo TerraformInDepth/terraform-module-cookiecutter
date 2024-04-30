@@ -1,0 +1,25 @@
+name: Formatting
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  formatting:
+    strategy:
+      matrix:
+        engine: ["opentofu", "terraform"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        if: ${{ matrix.engine == 'terraform' }}
+
+      - name: Install OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        if: ${{ matrix.engine == 'opentofu' }}
+
+      - name: Test Formatting
+        run: make test_formatting TF_ENGINE=${{matrix.engine}}

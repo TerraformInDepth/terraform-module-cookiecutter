@@ -1,0 +1,19 @@
+name: Checkov
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tflint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout source code
+
+      - name: Run Checkov action
+        id: checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .

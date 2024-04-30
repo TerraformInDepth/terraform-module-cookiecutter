@@ -1,0 +1,19 @@
+{
+  "name": "",
+  "license": [
+    "All Rights Reserved",
+    "MIT license",
+    "BSD license",
+    "Apache Software License 2.0",
+    "GNU General Public License v3"
+  ],
+  "author": "",
+  "minimum_terraform_version": "1.5",
+  "primary_provider": "hashicorp/aws",
+  "provider_min_version": "5.0",
+  "private_registry_url": "",
+  "__short_primary_provider": "{{ cookiecutter.primary_provider.split('/')[-1] }}",
+  "_copy_without_render": [
+    "*workflows"
+  ]
+}

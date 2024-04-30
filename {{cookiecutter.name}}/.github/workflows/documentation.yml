@@ -1,0 +1,16 @@
+name: Teraform-Docs
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tflint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout source code
+
+      - name: Run Terraform-Docs
+        run: make test_documentation

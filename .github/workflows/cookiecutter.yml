@@ -1,0 +1,23 @@
+name: Test Build Template
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  rebuild-templates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+
+      - name: "Install Cookiecutter"
+        run: pip install --user cookiecutter
+
+      - name: "Build Template"
+        run: make test
