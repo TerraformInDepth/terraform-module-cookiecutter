@@ -20,7 +20,8 @@ If your project has custom (but repeated) needs you can always fork this templat
 * CI using Github Actions Workflows.
 * Git Hooks with the Pre-Commit Framework.
 * Terraform and OpenTofu version management with tenv.
+* Testing with Terratest and Terraform Testing Framework.
 
 ## Terraform in Depth
 
-This template was developed alongside [Terraform in Depth](https://mng.bz/QR21), which is currently in the Manning Early Access Program. As new content is released in the book this template will be updated. The next big release for this template will come when Chapter 9 is released, which focused on testing with Terratest or the new Terraform Testing features.
+This template was developed alongside [Terraform in Depth](https://mng.bz/QR21), which is currently in the Manning Early Access Program. As new content is released in the book this template will be updated.

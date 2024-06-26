@@ -2,6 +2,8 @@ name: Checkov
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 jobs:
@@ -14,6 +16,7 @@ jobs:
 
       - name: Run Checkov action
         id: checkov
-        uses: bridgecrewio/checkov-action@master
+        uses: bridgecrewio/checkov-action@v12
         with:
           directory: .
+          framework: terraform

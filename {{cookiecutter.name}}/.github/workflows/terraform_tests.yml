@@ -1,0 +1,42 @@
+name: Terraform Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  terraform_test:
+    strategy:
+      matrix:
+        engine: ["opentofu", "terraform"]
+        version: ["1.6", "1.7"]
+        experimental: [false]
+        include:
+          - version: "1.8"
+            engine: "opentofu"
+            experimental: true
+          - version: "1.8"
+            engine: "terraform"
+            experimental: false
+
+    continue-on-error: ${{ matrix.experimental }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        if: ${{ matrix.engine == 'terraform' }}
+        with:
+          terraform_version: ${{ matrix.version }}
+
+      - name: Install OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        if: ${{ matrix.engine == 'opentofu' }}
+        with:
+          tofu_version: ${{ matrix.version }}
+
+      - name: Run Terraform Tests
+        run: make terraform_test TF_ENGINE=${{matrix.engine}}
