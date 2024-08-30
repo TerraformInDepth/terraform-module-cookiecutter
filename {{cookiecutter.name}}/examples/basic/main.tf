@@ -18,9 +18,10 @@ variable "test_input" {
 # If your module has a `name` field don't forget to add some randomness.
 module "basic_example" {
   source = "../../"
+  input = var.test_input
 }
 
 # Replace this output with the one for your tests.
 output "test_output" {
-  value = var.test_input
+  value = module.basic_example.output
 }

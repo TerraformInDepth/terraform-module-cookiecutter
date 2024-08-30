@@ -24,4 +24,4 @@ If your project has custom (but repeated) needs you can always fork this templat
 
 ## Terraform in Depth
 
-This template was developed alongside [Terraform in Depth](https://mng.bz/QR21), which is currently in the Manning Early Access Program. As new content is released in the book this template will be updated.
+This template was developed alongside [Terraform in Depth](https://mng.bz/QR21), which is currently in the Manning Early Access Program. As new content is released in the book this template will be updated.$$$$

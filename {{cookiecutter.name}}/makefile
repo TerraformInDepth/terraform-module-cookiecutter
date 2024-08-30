@@ -1,12 +1,25 @@
+# Get the set versions of Terraform and OpenTofu.
+TERRAFORM_VERSION:=$(shell cat .terraform-version)
+TOFU_VERSION:=$(shell cat .terraform-version)
+
 # Select the engine: opentofu or terraform.
 # make validate TF_ENGINE=opentofu
 # This will switch the engine for all actions, including testing.
 TF_ENGINE:=terraform
 ifeq ($(TF_ENGINE), terraform)
 	TF_BINARY:=terraform
+	TF_VERSION:=$(TERRAFORM_VERSION)
 else ifeq ($(TF_ENGINE), opentofu)
 	TF_BINARY:=tofu
+	TF_VERSION:=$(TOFU_VERSION)
 endif
+
+ifeq ($(CI), )
+	TFENV_COMMAND:=tenv use $(TF_BINARY) $(TF_VERSION)
+else
+	TFENV_COMMAND:=echo "skipping tenv use in CI"
+endif
+
 
 # Packages to install based on different package managers.
 BREW_PACKAGES := cosign tenv terraform-docs tflint checkov trivy pre-commit golang
@@ -133,16 +146,22 @@ terratest: tests/go.sum
 # Terraform Test Framework
 #
 
-TERAFORM_EXAMPLES:=$(wildcard tests/*_test.go)
+TERRAFORM_EXAMPLES:=$(wildcard examples/*)
 
-all: $(SUBDIRS)
-$(SUBDIRS):
-        $(MAKE) -C $@
 
-.PHONY: terraform_test
-terraform_test:
+.PHONY: $(TERRAFORM_EXAMPLES)
+$(TERRAFORM_EXAMPLES):
+	@echo "Testing $@"
+	cd $@ && \
+	$(TFENV_COMMAND) && \
+	$(TF_BINARY) init -backend=false && \
 	$(TF_BINARY) test $(TF_TEST_OPTS)
 
+.PHONY: terraform_test
+terraform_test: $(TERRAFORM_EXAMPLES)
+	@echo "Testing Root Module"
+	$(TFENV_COMMAND) && \
+	$(TF_BINARY) test $(TF_TEST_OPTS)
 
 #
 # Validation
