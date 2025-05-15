@@ -43,7 +43,7 @@ all:
 
 chores: documentation formatting
 
-test: test_documentation test_lint test_security test_validation test_formatting
+test: test_documentation test_tflint test_security test_validation test_formatting
 
 #
 # Install
